@@ -1,0 +1,11 @@
+<mat-drawer-container class="sidebar">
+  <mat-drawer mode="side" opened class="dark">
+    <p class="balance">{{ 29999.00 | currency }}</p>
+    <p class="accountNumber">PL{{'42109023438533965655286250' | mask: '00 0000 0000 0000 0000 0000 0000'}} </p>
+    <button mat-stroked-button>Copy number</button><br>
+    <img src="../../assets/user-img.png" alt="user image" class="user-image">
+    <p class="username">John Doe</p>
+    <button mat-button class="primary">Manage account</button>
+  </mat-drawer>
+  <mat-drawer-content><router-outlet></router-outlet></mat-drawer-content>
+</mat-drawer-container>

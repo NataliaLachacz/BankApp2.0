@@ -1,0 +1,24 @@
+:host {
+  display: grid;
+  align-items: center;
+  height: 100%;
+}
+
+.container {
+  text-align: center;
+  display: grid;
+  align-content: space-around;
+}
+
+.container__sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-around;
+  margin: 30px;
+}
+
+@media only screen and (max-width: 970px) {
+  .container__sections {
+    grid-template-columns: 1fr;
+  }
+}

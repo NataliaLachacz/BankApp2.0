@@ -1,0 +1,13 @@
+<div>
+  <h3>Monthly summary</h3>
+  <div class="flex">
+    <div class="padding">
+      <h4>Income</h4>
+      <p [ngClass]="income | amountColor">{{income | currency}}</p>
+    </div>
+    <div class="padding">
+      <h4>Expense</h4>
+      <p [ngClass]="-expense | amountColor">{{-expense | currency}}</p>
+    </div>
+  </div>
+</div>

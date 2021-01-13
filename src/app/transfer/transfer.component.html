@@ -1,0 +1,29 @@
+<div class="container">
+  <h2>Make a transfer</h2>
+  <form>
+    <mat-form-field class="form-control">
+      <mat-label>Amount</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+    <mat-form-field class="form-control">
+      <mat-label>Account number</mat-label>
+      <input matInput>
+    </mat-form-field>
+    <mat-form-field class="form-control">
+      <mat-label>Receiver name</mat-label>
+      <input matInput>
+    </mat-form-field>
+    <mat-form-field class="form-control">
+      <mat-label>Title of transfer</mat-label>
+      <input matInput>
+    </mat-form-field>
+    <mat-slide-toggle [(ngModel)]="isChecked"[ngModelOptions]="{standalone: true}">Transfer with a later date</mat-slide-toggle>
+    <mat-form-field class="form-control">
+      <mat-label>Select a date</mat-label>
+      <input matInput [min]="minDate" [matDatepicker]="futureDate" disabled>
+      <mat-datepicker-toggle matSuffix [for]="futureDate" class="date-icon"></mat-datepicker-toggle>
+      <mat-datepicker #futureDate [disabled]="!isChecked"></mat-datepicker>
+    </mat-form-field>
+    <button mat-raised-button class="dark" (click)="openDialog()">Confirm</button>
+  </form>
+</div>

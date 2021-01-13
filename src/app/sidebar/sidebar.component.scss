@@ -1,0 +1,44 @@
+.sidebar {
+  background-color: white;
+  color: black;
+  position: absolute;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.mat-drawer {
+  width: 20%;
+  text-align: center;
+  background-color:rgb(94, 94, 94);
+  background-image: url('../../assets/bg-sidenav.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.mat-drawer-content {
+  margin-left: 20%;
+}
+
+.accountNumber {
+  font-weight: lighter;
+  font-size: 1.2rem;
+}
+
+.balance {
+  font-size: 4rem;
+  margin-bottom: 0;
+}
+
+.user-image {
+  margin-top: 50px;
+  border-radius: 50%;
+  width: 50%;
+}
+
+.username {
+  font-size: 2rem;
+  word-wrap: break-word;
+}

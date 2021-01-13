@@ -1,19 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
+html, body { max-height: 100vh; font-size: 16px; margin: 0; padding: 0;}
+body { font-family: Roboto, "Helvetica Neue", sans-serif;}
 
-html, body { max-height: 100vh; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+* {
+  box-sizing: border-box;
+}
+
+$red: #932432;
 
 .primary {
-  background: #932432;
+  background: $red;
   color: white;
 }
 
-.accent {
-  background: #3c1874;
-  color: white;
+.primary-text {
+  color:$red;
 }
 
 .dark {
   background: #283747;
   color: white;
+}
+
+.text-success {
+  color: green;
+}
+
+.text-danger {
+  color: red;
+}
+
+@media only screen and (max-width: 1400px) {
+  html, body {
+    font-size: 14px;
+  }
 }
