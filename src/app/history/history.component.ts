@@ -1,26 +1,35 @@
 import { Component, OnInit } from '@angular/core';
+import { Apollo } from 'apollo-angular';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import gql from 'graphql-tag';
 
-export interface PeriodicElement {
-  name: string;
+interface Transfer {
   amount: number;
-  accountNumber: string;
-  title: string;
   date: Date;
+  name: string;
+  senderAccountNumber: string;
+  title: string;
+  type: string
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {name: 'Jan Kowalski', amount: 150.50, accountNumber: '53109010304515633680567719', title: 'Zakupy', date: new Date("December 04, 2020 03:24:00")},
-  {name: 'Jan Kowalski', amount: 150.50, accountNumber: '53109010304515633680567719', title: 'Zakupy', date: new Date("December 04, 2020 03:24:00")},
-  {name: 'Jan Kowalski', amount: 150.50, accountNumber: '53109010304515633680567719', title: 'Zakupy', date: new Date("December 04, 2020 03:24:00")},
-  {name: 'Jan Kowalski', amount: 150.50, accountNumber: '53109010304515633680567719', title: 'Zakupy', date: new Date("December 04, 2020 03:24:00")},
-  {name: 'Jan Kowalski', amount: 150.50, accountNumber: '53109010304515633680567719', title: 'Zakupy', date: new Date("December 04, 2020 03:24:00")},
-  {name: 'Jan Kowalski', amount: 150.50, accountNumber: '53109010304515633680567719', title: 'Zakupy', date: new Date("December 04, 2020 03:24:00")},
-  {name: 'Jan Kowalski', amount: 150.50, accountNumber: '53109010304515633680567719', title: 'Zakupy', date: new Date("December 04, 2020 03:24:00")},
-  {name: 'Jan Kowalski', amount: 150.50, accountNumber: '53109010304515633680567719', title: 'Zakupy', date: new Date("December 04, 2020 03:24:00")},
-  {name: 'Jan Kowalski', amount: 150.50, accountNumber: '53109010304515633680567719', title: 'Zakupy', date: new Date("December 04, 2020 03:24:00")},
-  {name: 'Jan Kowalski', amount: 150.50, accountNumber: '53109010304515633680567719', title: 'Zakupy', date: new Date("December 04, 2020 03:24:00")},
-  {name: 'Jan Kowalski', amount: 150.50, accountNumber: '53109010304515633680567719', title: 'Zakupy', date: new Date("December 04, 2020 03:24:00")},
-];
+interface Response {
+  transfers: Transfer[];
+}
+
+const GET_TRANSFERS = gql`
+  query Transfers {
+    transfers {
+      amount
+      date
+      name
+      senderAccountNumber
+      title
+      type
+    }
+  }
+`;
+
 
 @Component({
   selector: 'app-history',
@@ -29,11 +38,14 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class HistoryComponent implements OnInit {
   displayedColumns: string[] = ['name', 'amount', 'accountNumber', 'title', 'date'];
-  dataSource = ELEMENT_DATA;
+  transfers$: Observable<Transfer[]>;
 
-  constructor() { }
+  constructor(private apollo: Apollo) { }
 
   ngOnInit(): void {
+    this.transfers$ = this.apollo.watchQuery<Response>({
+      query: GET_TRANSFERS
+    }).valueChanges.pipe(map(result => result.data.transfers));
   }
 
 }

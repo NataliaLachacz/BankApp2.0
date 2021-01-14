@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from './material/material.module';
 import { ChartsModule } from 'ng2-charts';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,7 +19,9 @@ import { HistoryComponent } from './history/history.component';
 
 import { NgxMaskModule } from 'ngx-mask';
 import { AmountColorPipe } from './amount-color.pipe';
-import { ConfirmDialogComponent } from './transfer/confirm-dialog/confirm-dialog.component'
+import { ConfirmDialogComponent } from './transfer/confirm-dialog/confirm-dialog.component';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -43,7 +45,10 @@ import { ConfirmDialogComponent } from './transfer/confirm-dialog/confirm-dialog
     MaterialModule,
     ChartsModule,
     FormsModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    GraphQLModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
