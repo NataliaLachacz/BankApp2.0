@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
@@ -36,26 +36,27 @@ export class TransferComponent implements OnInit{
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private apollo: Apollo) { }
 
-  onMakeTransfer() {
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      amount: new FormControl('', Validators.required),
+      senderAccountNumber: new FormControl('', Validators.required),
+      name: new FormControl(''),
+      title: new FormControl(''),
+      date: new FormControl(new Date()),
+      type: new FormControl('expense'),
+      accountNumber: new FormControl('42109023438533965655286250', Validators.required)
+    });
+  }
+
+  onMakeTransfer(f: NgForm) {
+    f.value.title = '';
     this.apollo.mutate({
       mutation: ADD_TRANSFER,
       variables: this.form.value
-    }).subscribe(({data}) => {
-      console.log(data);
+    }).subscribe(() => {
+        f.resetForm();
     },
     (error) => console.error(error));
     this.dialog.open(ConfirmDialogComponent);
-  }
-
-  ngOnInit(): void {
-   this.form = this.fb.group({
-     amount: new FormControl('', Validators.required),
-     senderAccountNumber: new FormControl('', Validators.required),
-     name: new FormControl('', Validators.required),
-     title: new FormControl('', Validators.required),
-     date: new FormControl(new Date(), Validators.required),
-     type: new FormControl('expense'),
-     accountNumber: new FormControl('42109023438533965655286250', Validators.required)
-   })
   }
 }

@@ -1,13 +1,13 @@
 <div class="container">
   <h2>Make a transfer</h2>
-  <form [formGroup]="form">
+  <form [formGroup]="form" #f="ngForm">
     <mat-form-field class="form-control">
       <mat-label>Amount</mat-label>
       <input matInput type="number" formControlName="amount">
     </mat-form-field>
     <mat-form-field class="form-control">
       <mat-label>Account number</mat-label>
-      <input matInput formControlName="senderAccountNumber">
+      <input matInput formControlName="senderAccountNumber" mask="00 0000 0000 0000 0000 0000 0000">
     </mat-form-field>
     <mat-form-field class="form-control">
       <mat-label>Receiver name</mat-label>
@@ -20,10 +20,10 @@
     <mat-slide-toggle [(ngModel)]="isChecked"[ngModelOptions]="{standalone: true}">Transfer with a later date</mat-slide-toggle>
     <mat-form-field class="form-control">
       <mat-label>Select a date</mat-label>
-      <input matInput [min]="minDate" [matDatepicker]="futureDate" disabled formControlName="date">
+      <input class="disabled" matInput [min]="minDate" [matDatepicker]="futureDate" readonly="true" formControlName="date">
       <mat-datepicker-toggle matSuffix [for]="futureDate" class="date-icon"></mat-datepicker-toggle>
       <mat-datepicker #futureDate [disabled]="!isChecked"></mat-datepicker>
     </mat-form-field>
-    <button mat-raised-button class="dark" (click)="onMakeTransfer()" [disabled]="form.invalid&&form.touched">Confirm</button>
+    <button mat-raised-button class="dark" (click)="onMakeTransfer(f)" [disabled]="form.invalid">Confirm</button>
   </form>
 </div>

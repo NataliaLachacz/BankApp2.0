@@ -1,15 +1,19 @@
 $red: #932432;
 
-.container {
-  width: 400px;
-  text-align: center;
-}
-
 :host {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+.container {
+  width: 400px;
+  text-align: center;
+}
+
+.disabled {
+  color: rgba(0,0,0,.38);
 }
 
 .form-control {
