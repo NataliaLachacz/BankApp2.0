@@ -1,28 +1,8 @@
+import { AddTransferGQL } from './../../generated/graphql';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-
-const ADD_TRANSFER = gql`
-  mutation AddTransfer($accountNumber: String!, $amount: numeric!, $date: date!, $name: name!, $senderAccountNumber: String!, $title: String!, $type: String!) {
-    insert_transfers(objects: {accountNumber: $accountNumber, amount: $amount, date: $date, name: $name, senderAccountNumber: $senderAccountNumber, title: $title, type: $type}) {
-      returning {
-        accountNumber
-        amount
-        date
-        name
-        senderAccountNumber
-        title
-        type
-        account {
-          balance
-        }
-      }
-    }
-  }
-`;
 
 @Component({
   selector: 'app-transfer',
@@ -34,7 +14,7 @@ export class TransferComponent implements OnInit{
   isChecked = false;
   form: FormGroup;
 
-  constructor(public dialog: MatDialog, private fb: FormBuilder, private apollo: Apollo) { }
+  constructor(public dialog: MatDialog, private fb: FormBuilder, private addTransfersGQL: AddTransferGQL) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -42,19 +22,22 @@ export class TransferComponent implements OnInit{
       senderAccountNumber: new FormControl('', Validators.required),
       name: new FormControl(''),
       title: new FormControl(''),
-      date: new FormControl(new Date()),
+      date: new FormControl(''),
       type: new FormControl('expense'),
       accountNumber: new FormControl('42109023438533965655286250', Validators.required)
     });
   }
 
   onMakeTransfer(f: NgForm) {
-    f.value.title = '';
-    this.apollo.mutate({
-      mutation: ADD_TRANSFER,
-      variables: this.form.value
-    }).subscribe(() => {
-        f.resetForm();
+    let date = this.form.value.date;
+    this.form.patchValue({
+      name: this.form.value.name ? this.form.value.name : '------',
+      title: this.form.value.title ? this.form.value.title : '------',
+      date: date ? (`${date.getFullYear()}-${("0"+(date.getMonth()+1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`) : new Date()
+    });
+    this.addTransfersGQL.mutate(this.form.value).subscribe(() => {
+      f.resetForm();
+      this.isChecked = false;
     },
     (error) => console.error(error));
     this.dialog.open(ConfirmDialogComponent);
