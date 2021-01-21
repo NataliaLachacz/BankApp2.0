@@ -401,7 +401,7 @@ export interface MutationRootDeleteTransfersArgs {
 
 /** mutation root */
 export interface MutationRootDeleteTransfersByPkArgs {
-  uid: Scalars['uuid'];
+  uuid: Scalars['uuid'];
 }
 
 
@@ -620,7 +620,7 @@ export interface QueryRootTransfersAggregateArgs {
 
 /** query root */
 export interface QueryRootTransfersByPkArgs {
-  uid: Scalars['uuid'];
+  uuid: Scalars['uuid'];
 }
 
 
@@ -721,7 +721,7 @@ export interface SubscriptionRootTransfersAggregateArgs {
 
 /** subscription root */
 export interface SubscriptionRootTransfersByPkArgs {
-  uid: Scalars['uuid'];
+  uuid: Scalars['uuid'];
 }
 
 
@@ -762,7 +762,7 @@ export interface Transfers {
   senderAccountNumber: Scalars['String'];
   title: Scalars['String'];
   type: Scalars['String'];
-  uid: Scalars['uuid'];
+  uuid: Scalars['uuid'];
 }
 
 /** aggregated selection of "transfers" */
@@ -840,7 +840,7 @@ export interface TransfersBoolExp {
   senderAccountNumber?: Maybe<StringComparisonExp>;
   title?: Maybe<StringComparisonExp>;
   type?: Maybe<StringComparisonExp>;
-  uid?: Maybe<UuidComparisonExp>;
+  uuid?: Maybe<UuidComparisonExp>;
 }
 
 /** unique or primary key constraints on table "transfers" */
@@ -864,7 +864,7 @@ export interface TransfersInsertInput {
   senderAccountNumber?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
-  uid?: Maybe<Scalars['uuid']>;
+  uuid?: Maybe<Scalars['uuid']>;
 }
 
 /** aggregate max on columns */
@@ -876,7 +876,7 @@ export interface TransfersMaxFields {
   senderAccountNumber?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
-  uid?: Maybe<Scalars['uuid']>;
+  uuid?: Maybe<Scalars['uuid']>;
 }
 
 /** order by max() on columns of table "transfers" */
@@ -887,7 +887,7 @@ export interface TransfersMaxOrderBy {
   senderAccountNumber?: Maybe<OrderBy>;
   title?: Maybe<OrderBy>;
   type?: Maybe<OrderBy>;
-  uid?: Maybe<OrderBy>;
+  uuid?: Maybe<OrderBy>;
 }
 
 /** aggregate min on columns */
@@ -899,7 +899,7 @@ export interface TransfersMinFields {
   senderAccountNumber?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
-  uid?: Maybe<Scalars['uuid']>;
+  uuid?: Maybe<Scalars['uuid']>;
 }
 
 /** order by min() on columns of table "transfers" */
@@ -910,7 +910,7 @@ export interface TransfersMinOrderBy {
   senderAccountNumber?: Maybe<OrderBy>;
   title?: Maybe<OrderBy>;
   type?: Maybe<OrderBy>;
-  uid?: Maybe<OrderBy>;
+  uuid?: Maybe<OrderBy>;
 }
 
 /** response of any mutation on the table "transfers" */
@@ -945,12 +945,12 @@ export interface TransfersOrderBy {
   senderAccountNumber?: Maybe<OrderBy>;
   title?: Maybe<OrderBy>;
   type?: Maybe<OrderBy>;
-  uid?: Maybe<OrderBy>;
+  uuid?: Maybe<OrderBy>;
 }
 
 /** primary key columns input for table: "transfers" */
 export interface TransfersPkColumnsInput {
-  uid: Scalars['uuid'];
+  uuid: Scalars['uuid'];
 }
 
 /** select columns of table "transfers" */
@@ -970,7 +970,7 @@ export enum TransfersSelectColumn {
   /** column name */
   Type = 'type',
   /** column name */
-  Uid = 'uid'
+  Uuid = 'uuid'
 }
 
 /** input type for updating data in table "transfers" */
@@ -982,7 +982,7 @@ export interface TransfersSetInput {
   senderAccountNumber?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
-  uid?: Maybe<Scalars['uuid']>;
+  uuid?: Maybe<Scalars['uuid']>;
 }
 
 /** aggregate stddev on columns */
@@ -1046,7 +1046,7 @@ export enum TransfersUpdateColumn {
   /** column name */
   Type = 'type',
   /** column name */
-  Uid = 'uid'
+  Uuid = 'uuid'
 }
 
 /** aggregate var_pop on columns */
@@ -1260,6 +1260,17 @@ export type TransfersQuery = (
   )> }
 );
 
+export type AccountsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AccountsQuery = (
+  { __typename?: 'query_root' }
+  & { accounts: Array<(
+    { __typename?: 'accounts' }
+    & Pick<Accounts, 'accountNumber' | 'balance' | 'userId'>
+  )> }
+);
+
 export type AddTransferMutationVariables = Exact<{
   accountNumber: Scalars['String'];
   amount: Scalars['numeric'];
@@ -1304,6 +1315,26 @@ export const TransfersDocument = gql`
   })
   export class TransfersGQL extends Apollo.Query<TransfersQuery, TransfersQueryVariables> {
     document = TransfersDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AccountsDocument = gql`
+    query Accounts {
+  accounts {
+    accountNumber
+    balance
+    userId
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AccountsGQL extends Apollo.Query<AccountsQuery, AccountsQueryVariables> {
+    document = AccountsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

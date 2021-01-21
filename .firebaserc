@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "bankapp2-f19b3": {
+      "hosting": {
+        "BankApp2": [
+          "bankapp2-f19b3"
+        ]
+      }
+    }
+  }
+}

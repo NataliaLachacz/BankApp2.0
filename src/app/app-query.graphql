@@ -1,3 +1,5 @@
+# QUERY
+
 query Transfers {
     transfers {
       amount
@@ -8,6 +10,16 @@ query Transfers {
       type
     }
   }
+
+  query Accounts {
+  accounts {
+    accountNumber
+    balance
+    userId
+  }
+}
+
+# MUTATIONS
 
   mutation AddTransfer($accountNumber: String!, $amount: numeric!, $date: date!, $name: name!, $senderAccountNumber: String!, $title: String!, $type: String!) {
     insert_transfers(objects: {accountNumber: $accountNumber, amount: $amount, date: $date, name: $name, senderAccountNumber: $senderAccountNumber, title: $title, type: $type}) {

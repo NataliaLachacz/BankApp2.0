@@ -1,0 +1,21 @@
+<form class="form" [formGroup]="registerForm">
+  <mat-form-field class="form-control">
+    <mat-label>Your full name</mat-label>
+    <input matInput type="text" formControlName="fullName">
+  </mat-form-field>
+  <mat-form-field class="form-control">
+    <mat-label>Your email</mat-label>
+    <input matInput type="email" formControlName="email">
+  </mat-form-field>
+  <mat-form-field class="form-control">
+    <mat-label>Your password</mat-label>
+    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+  <div class="form-footer">
+    <button mat-raised-button class="dark" (click)="onRegister()" [disabled]="registerForm.invalid">Register</button>
+    <a routerLink='/login'>Go to login</a>
+  </div>
+</form>

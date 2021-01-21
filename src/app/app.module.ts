@@ -21,7 +21,11 @@ import { NgxMaskModule } from 'ngx-mask';
 import { AmountColorPipe } from './amount-color.pipe';
 import { ConfirmDialogComponent } from './transfer/confirm-dialog/confirm-dialog.component';
 import { GraphQLModule } from './graphql.module';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './user/login/login.component';
+import { RegisterComponent } from './user/register/register.component'
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -36,10 +40,13 @@ import { HttpClientModule } from '@angular/common/http'
     TransferComponent,
     HistoryComponent,
     AmountColorPipe,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(environment.firebase),
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
